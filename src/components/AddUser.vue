@@ -7,50 +7,43 @@
         ref="userInfo"
         label-position="top"
       >
-        <el-row>
-          <el-col :span="9">
-            <el-form-item prop="avatar">
-              <el-popover placement="right" trigger="click" width="440">
-                <el-row :gutter="10">
-                  <el-col :span="4.5" v-for="item in avatarList" :key="item.id">
-                    <img
-                      :src="item.image"
-                      width="80"
-                      height="80"
-                      @click="setAvatarImage(item.image)"
-                      style="cursor: pointer"
-                    />
-                  </el-col>
-                </el-row>
-                <!-- <div class="avatar" slot="reference"> -->
-                <el-avatar
-                  :src="
-                    selectedAvatarImage
-                      ? selectedAvatarImage
-                      : require('../assets/images/default-avatar.png')
-                  "
-                  :size="100"
-                  slot="reference"
-                ></el-avatar>
-                <!-- </div> -->
-              </el-popover>
-            </el-form-item></el-col
-          >
-          <el-col :span="15">
-            <el-form-item label="Nome completo" prop="name">
-              <el-input v-model="userInfo.name" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="Data de nascimento" prop="date">
-              <el-date-picker
-                type="date"
-                v-model="userInfo.birthDate"
-                style="width: 100%"
-                format="dd/MM/yyyy"
-                size="small"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-form-item class="avatar-form-item" prop="avatar">
+          <el-popover placement="right" trigger="click" width="440">
+            <el-row :gutter="10">
+              <el-col :span="4.5" v-for="item in avatarList" :key="item.id">
+                <img
+                  :src="item.image"
+                  width="80"
+                  height="80"
+                  @click="setAvatarImage(item.image)"
+                  style="cursor: pointer"
+                />
+              </el-col>
+            </el-row>
+            <el-avatar
+              :src="
+                selectedAvatarImage
+                  ? selectedAvatarImage
+                  : require('../assets/images/default-avatar.png')
+              "
+              :size="100"
+              slot="reference"
+            >
+            </el-avatar>
+          </el-popover>
+        </el-form-item>
+        <el-form-item label="Nome completo" prop="name">
+          <el-input v-model="userInfo.name" size="small"></el-input>
+        </el-form-item>
+        <el-form-item label="Data de nascimento" prop="date">
+          <el-date-picker
+            type="date"
+            v-model="userInfo.birthDate"
+            style="width: 100%"
+            format="dd/MM/yyyy"
+            size="small"
+          />
+        </el-form-item>
         <el-form-item label="E-mail" prop="email">
           <el-input v-model="userInfo.email" size="small"></el-input>
         </el-form-item>
@@ -101,13 +94,21 @@
           </el-col>
         </el-row>
 
-        <el-form-item label="Endereço" prop="streetAddress">
-          <el-input v-model="userInfo.streetAddress" size="small" />
-        </el-form-item>
+        <el-row :gutter="10">
+          <el-col :span="14">
+            <el-form-item label="Endereço" prop="streetAddress">
+              <el-input v-model="userInfo.streetAddress" size="small" />
+            </el-form-item>
+          </el-col>
 
-        <el-form-item label="Complemento" prop="secondaryAddress">
-          <el-input v-model="userInfo.secondaryAddress" size="small" />
-        </el-form-item>
+          <el-col :span="10">
+            <el-form-item label="Complemento" prop="secondaryAddress">
+              <el-input
+                v-model="userInfo.secondaryAddress"
+                size="small"
+              /> </el-form-item
+          ></el-col>
+        </el-row>
 
         <el-form-item label="Profissão" prop="occupation">
           <el-input v-model="userInfo.occupation" size="small" />
@@ -210,7 +211,7 @@ export default {
   },
   mounted() {
     getCountries.then((resp) => (this.countries = resp));
-    getAvatars.then((resp) => (this.avatarList = resp.results.slice(0, 5)));
+    getAvatars.then((resp) => (this.avatarList = resp.results.slice(0, 20)));
     bus.$on("editUser", (user) => {
       this.userInfo = user;
       this.selectedAvatarImage = user.avatar;
@@ -311,10 +312,18 @@ export default {
   &__wrapper {
     width: 300px;
     background-color: white;
-    border-radius: 20px;
-    margin: 30px auto;
+    border-radius: 10px;
+    margin: 0 auto;
     box-shadow: $shadow;
-    padding: 20px;
+    padding: 10px 20px;
+    margin-top: 35px;
+    .avatar-form-item {
+      text-align: center;
+    }
+    .el-avatar {
+      margin: 0;
+      cursor: pointer;
+    }
     .el-form {
       &-item {
         margin-bottom: 15px;

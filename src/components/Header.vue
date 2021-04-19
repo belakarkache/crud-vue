@@ -3,17 +3,8 @@
     <div class="header__info">
       <h1 class="header__info-title">Users Dashboard</h1>
       <small class="header__info-subtitle">
-        Visualize, edite e remova usuários cadastrados
+        Adicione novos usuários e visualize, edite e remova usuários cadastrados
       </small>
-    </div>
-
-    <div class="search">
-      <el-input
-        placeholder="Busca"
-        prefix-icon="el-icon-search"
-        v-model="search"
-      >
-      </el-input>
     </div>
   </div>
 </template>
@@ -21,11 +12,6 @@
 <script>
 export default {
   name: "Header",
-  data() {
-    return {
-      search: "",
-    };
-  },
 };
 </script>
 

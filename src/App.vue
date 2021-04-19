@@ -5,8 +5,22 @@
         <AddUser />
       </el-col>
       <el-col :md="17" :lg="17" :xl="19">
-        <Header />
-        <DisplayUsers :users="users" :key="update" />
+        <el-row class="pb">
+          <el-col :span="12">
+            <Header />
+          </el-col>
+          <el-col :span="12" class="search-col">
+            <div class="search">
+              <el-input
+                placeholder="Busca"
+                prefix-icon="el-icon-search"
+                v-model="search"
+              >
+              </el-input>
+            </div>
+          </el-col>
+        </el-row>
+        <DisplayUsers :users="users" :search="search" />
       </el-col>
     </el-row>
   </div>
@@ -31,7 +45,7 @@ export default {
     return {
       users: [],
       loading: false,
-      update: 0,
+      search: "",
     };
   },
   methods: {
@@ -56,4 +70,25 @@ export default {
 
 <style lang="scss">
 @import "./assets/scss/app.scss";
+
+.pb {
+  padding-bottom: 10px;
+}
+.search-col {
+  height: 100px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  .search {
+    width: 100%;
+    display: block;
+    height: 40px;
+    margin-bottom: 5px;
+    .el-input {
+      width: 300px;
+      float: right;
+      margin-right: 65px;
+    }
+  }
+}
 </style>

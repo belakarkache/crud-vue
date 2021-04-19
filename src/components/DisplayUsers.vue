@@ -5,7 +5,7 @@
         :md="8"
         :lg="8"
         :xl="6"
-        v-for="(user, index) in users"
+        v-for="(user, index) in filteredUsers"
         :key="user.id"
       >
         <div class="display-users__card">
@@ -78,12 +78,29 @@ import bus from "../bus";
 
 export default {
   name: "DisplayUsers",
-  props: ["users"],
-  data() {
-    return {
-      editUserDialogTrigger: false,
-      userData: {},
-    };
+  props: ["users", "search"],
+  computed: {
+    filteredUsers() {
+      if (this.search) {
+        let filteredArray = [];
+        this.users.filter((user) => {
+          Object.values(user).forEach((value) => {
+            if (
+              value
+                .toString()
+                .toLowerCase()
+                .includes(this.search.toLowerCase()) &&
+              !filteredArray.includes(user)
+            ) {
+              filteredArray.push(user);
+            }
+          });
+        });
+        return filteredArray;
+      } else {
+        return this.users;
+      }
+    },
   },
   methods: {
     removeUser(id, index) {
@@ -121,17 +138,21 @@ export default {
 @import "../assets/scss/app.scss";
 
 .display-users {
-  height: 89vh;
+  height: 85vh;
   overflow-y: scroll;
   overflow-x: hidden;
   &__card {
-    width: 260px;
+    width: 305px;
     height: 200px;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: $shadow;
     background-color: white;
     margin: 20px 0;
     padding: 10px;
+    position: relative;
+    @media only screen and (max-width: 1400px) {
+      width: 250px;
+    }
     .user-info {
       .el-avatar {
         margin-top: 0;
@@ -139,6 +160,7 @@ export default {
       }
       &__name {
         color: $light-purple;
+        font-size: 1.1rem;
       }
       label {
         font-size: 10px;
@@ -151,7 +173,9 @@ export default {
       }
     }
     .actions {
-      float: right;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
       .el-button {
         border-radius: 50%;
         padding: 5px 6px;

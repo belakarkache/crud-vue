@@ -1,5 +1,8 @@
 # crud-vue
 
+## Published project link
+https://isabela-karkache-crud-vue.herokuapp.com/
+
 ## Project setup
 ```
 npm install
